@@ -20,12 +20,6 @@ defmodule Share.Repo do
       Share.Data.Driver
     ]
 
-    # @spec truncate_all() :: :ok
-    # def truncate_all() do
-    #   for schema <- @schemas, do: truncate(schema)
-    #   :ok
-    # end
-
     @spec truncate() :: :ok | {:error, term()}
     def truncate() do
       truncate(@schemas)
