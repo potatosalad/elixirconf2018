@@ -19,4 +19,4 @@
 
 +++
 
-# Toyota Connected
+<img src="assets/tc_logo_rectangle.png" alt="Toyota Connected" border="0" style="border: none; box-shadow: none;">
