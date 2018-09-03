@@ -208,6 +208,10 @@ defmodule Share.GraphQL.Schema.Reservation do
         output = %{reservation: reservation}
         {:ok, output}
 
+      {:ok, %{updated_reservations: {0, []}}} ->
+        # Race-condition over trying to stop the reservation, we lost :-(
+        {:error, "reservation already stopped"}
+
       {:error, :old_reservation, reason, _data} when is_binary(reason) ->
         {:error, "reservation #{reason}"}
     end

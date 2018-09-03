@@ -17,9 +17,15 @@ defmodule Share.Supervisor do
         shutdown: 5000,
         type: :supervisor,
         modules: [Share.Repo]
-      },
-      Plug.Adapters.Cowboy2.child_spec(scheme: :http, plug: Share.GraphQL.Router, options: [port: 4003])
+      }
     ]
+
+    child_specs =
+      if Mix.env() == :dev do
+        child_specs ++ [Plug.Adapters.Cowboy2.child_spec(scheme: :http, plug: Share.GraphQL.Router, options: [port: 4003])]
+      else
+        child_specs
+      end
 
     sup_flags = %{
       strategy: :one_for_one,
