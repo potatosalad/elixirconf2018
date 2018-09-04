@@ -15,26 +15,6 @@
 #### <a href="https://github.com/potatosalad" style="color: black;"><img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/github-mark.svg" width="40" height="40" border="0" style="border: none; box-shadow: none; margin: 0; padding: 0;"> potatosalad</a>
 #### <a href="https://twitter.com/potatosaladx" style="color: black;"><img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/twitter-mark.gif" width="40" height="40" border="0" style="border: none; box-shadow: none; margin: 0; padding: 0;"> potatosaladx</a>
 
-![↓](assets/down-arrow.png)
-
-+++
-
-<img src="assets/tc_logo_rectangle.png" alt="Toyota Connected" border="0" style="border: none; box-shadow: none;">
-
----
-
-# Sustainable Testing
-
-<hr>
-
-<small>[gitpitch.com/potatosalad/elixirconf2018](https://gitpitch.com/potatosalad/elixirconf2018)</small>
-
----
-
-## Andrew Bennett
-#### <a href="https://github.com/potatosalad" style="color: black;"><img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/github-mark.svg" width="40" height="40" border="0" style="border: none; box-shadow: none; margin: 0; padding: 0;"> potatosalad</a>
-#### <a href="https://twitter.com/potatosaladx" style="color: black;"><img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/twitter-mark.gif" width="40" height="40" border="0" style="border: none; box-shadow: none; margin: 0; padding: 0;"> potatosaladx</a>
-
 ![Image](assets/down-arrow.png)
 
 +++
@@ -130,8 +110,6 @@
 # Why Test?
 
 +++?image=assets/findbugs01.png&size=contain
-
-+++
 
 +++?image=assets/findbugs02.png&size=contain
 
@@ -473,11 +451,11 @@ end
 
 +++
 
-<img src="assets/symbolic-model-state.svg" alt="Symbolic Model State" border="0" style="border: none; box-shadow: none; width: 100%;">
+<img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/symbolic-model-state.svg" alt="Symbolic Model State" border="0" style="border: none; box-shadow: none; width: 100%;">
 
 +++
 
-<img src="assets/dynamic-model-state.svg" alt="Dynamic Model State" border="0" style="border: none; box-shadow: none; width: 100%;">
+<img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/dynamic-model-state.svg" alt="Dynamic Model State" border="0" style="border: none; box-shadow: none; width: 100%;">
 
 +++
 
