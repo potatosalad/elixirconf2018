@@ -3,7 +3,7 @@ defmodule PensieveStateMTest do
   use PropCheck
   import PropCheck.StateM
 
-  property "pensieve stateful operations", [:verbose, {:numtests, 100}, {:constraint_tries, 50}] do
+  property "pensieve StateM operations", [:verbose, {:numtests, 100}, {:constraint_tries, 50}] do
     forall(cmds <- commands(PensieveStateM)) do
       {:ok, apps} = Application.ensure_all_started(:pensieve)
       {history, state, result} = run_commands(PensieveStateM, cmds)
@@ -15,7 +15,7 @@ defmodule PensieveStateMTest do
     end
   end
 
-  property "Pensieve parallel stateful property", [:verbose, {:numtests, 100}, {:constraint_tries, 50}] do
+  property "pensieve parallel StateM property", [:verbose, {:numtests, 100}, {:constraint_tries, 50}] do
     forall(cmds <- parallel_commands(PensieveStateM)) do
       {:ok, apps} = Application.ensure_all_started(:pensieve)
       {history, state, result} = run_parallel_commands(PensieveStateM, cmds)
