@@ -57,26 +57,26 @@ defmodule PensieveStateM do
     is_pid(pid)
   end
 
-  def postcondition({pid, _memories}, {:call, _, :close, [pid]}, :ok) when is_pid(pid) do
+  def postcondition({pid, _memories}, {:call, _, :close, [pid]}, :ok) when not is_nil(pid) do
     true
   end
 
-  def postcondition({pid, _memories}, {:call, _, :remove_memory, [pid, _memory]}, _memory_ref) when is_pid(pid) do
+  def postcondition({pid, _memories}, {:call, _, :remove_memory, [pid, _memory]}, _memory_ref) when not is_nil(pid) do
     true
   end
 
-  def postcondition({pid, memories}, {:call, _, :relive_memory, [pid, memory_ref]}, {:ok, memory}) when is_pid(pid) do
+  def postcondition({pid, memories}, {:call, _, :relive_memory, [pid, memory_ref]}, {:ok, memory}) when not is_nil(pid) do
     case Map.fetch(memories, memory_ref) do
       {:ok, ^memory} -> true
       _ -> false
     end
   end
 
-  def postcondition({pid, _memories}, {:call, _, :relive_memory, [pid, _memory_ref]}, :error) when is_pid(pid) do
+  def postcondition({pid, _memories}, {:call, _, :relive_memory, [pid, _memory_ref]}, :error) when not is_nil(pid) do
     false
   end
 
-  def postcondition({pid, _memories}, {:call, _, :relive_bad_memory, [pid, _memory_ref]}, :error) when is_pid(pid) do
+  def postcondition({pid, _memories}, {:call, _, :relive_bad_memory, [pid, _memory_ref]}, :error) when not is_nil(pid) do
     true
   end
 
