@@ -1,7 +1,7 @@
 # Sustainable Testing
 ### ElixirConf 2018 &mdash; 4-7 September, 2018 &mdash; Bellevue, Washington
 
-[![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/potatosalad/elixirconf2018/master?grs=github&t=white)
+[![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/potatosalad/elixirconf2018/master?grs=github&t=white) [![Build Status](https://travis-ci.org/potatosalad/elixirconf2018.svg?branch=master)](https://travis-ci.org/potatosalad/elixirconf2018)
 
 This repository contains the sources used for the [&ldquo;Sustainable Testing&rdquo;](https://web.archive.org/web/20180901155638/https://elixirconf.com/2018/speakers/andrew-bennett) presentation given at ElixirConf 2018 on Friday, September 7, 2018 in Bellevue, Washington.
 
