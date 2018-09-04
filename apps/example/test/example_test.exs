@@ -1,5 +1,5 @@
 defmodule ExampleTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
   use PropCheck
 
   test "finds smallest element" do
