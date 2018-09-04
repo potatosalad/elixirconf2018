@@ -1,4 +1,4 @@
-defmodule PensieveTest do
+defmodule PensieveStateMTest do
   use ExUnit.Case, async: false
   use PropCheck
   import PropCheck.StateM
@@ -10,7 +10,7 @@ defmodule PensieveTest do
       for app <- apps, do: Application.stop(app)
 
       (result == :ok)
-      |> aggregate(command_names(cmds))
+      |> aggregate(:proper_statem.zip(:proper_fsm.state_names(history), command_names(cmds)))
       |> when_fail(print_failure_report(cmds, state, result, history))
     end
   end
@@ -22,7 +22,7 @@ defmodule PensieveTest do
       for app <- apps, do: Application.stop(app)
 
       (result == :ok)
-      |> aggregate(command_names(cmds))
+      |> aggregate(:proper_statem.zip(:proper_fsm.state_names(history), command_names(cmds)))
       |> when_fail(print_failure_report(cmds, state, result, history))
     end
   end

@@ -7,8 +7,8 @@ defmodule Pensieve.Supervisor do
     :supervisor.start_link({:local, __MODULE__}, __MODULE__, [])
   end
 
-  def start_child() do
-    :supervisor.start_child(__MODULE__, [])
+  def start_child(parent) do
+    :supervisor.start_child(__MODULE__, [parent])
   end
 
   def terminate_child(pid) do
