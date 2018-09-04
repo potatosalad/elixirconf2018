@@ -1,0 +1,169 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+input ApproveDriverInput {
+  id: ID!
+}
+
+type ApproveDriverPayload {
+  driver: Driver
+}
+
+input CreateDriverInput {
+  name: String!
+}
+
+type CreateDriverPayload {
+  driver: Driver
+}
+
+input CreateVehicleInput {
+  vin: String!
+}
+
+type CreateVehiclePayload {
+  vehicle: Vehicle
+}
+
+"""
+The `DateTime` scalar type represents a date and time in the UTC
+timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+string, including UTC timezone ("Z"). The parsed date and time string will
+be converted to UTC and any UTC offset other than 0 will be rejected.
+"""
+scalar DateTime
+
+type Driver implements Node {
+  approved: Boolean!
+
+  """The ID of an object"""
+  id: ID!
+  name: String!
+  reservations(after: String, before: String, first: Int, last: Int): ReservationConnection
+}
+
+type DriverConnection {
+  edges: [DriverEdge]
+  pageInfo: PageInfo!
+}
+
+type DriverEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Driver
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+type Reservation implements Node {
+  driver: Driver!
+  duration: Int!
+
+  """The ID of an object"""
+  id: ID!
+  start: DateTime!
+  stop: DateTime
+  vehicle: Vehicle!
+}
+
+type ReservationConnection {
+  edges: [ReservationEdge]
+  pageInfo: PageInfo!
+}
+
+type ReservationEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Reservation
+}
+
+type RootMutationType {
+  approveDriver(input: ApproveDriverInput!): ApproveDriverPayload
+  createDriver(input: CreateDriverInput!): CreateDriverPayload
+  createVehicle(input: CreateVehicleInput!): CreateVehiclePayload
+  startReservation(input: StartReservationInput!): StartReservationPayload
+  stopReservation(input: StopReservationInput!): StopReservationPayload
+  suspendDriver(input: SuspendDriverInput!): SuspendDriverPayload
+}
+
+type RootQueryType {
+  drivers(after: String, before: String, first: Int, last: Int): DriverConnection
+
+  """Fetches an object given its ID"""
+  node(
+    """The id of an object."""
+    id: ID!
+  ): Node
+  reservations(after: String, before: String, first: Int, last: Int): ReservationConnection
+  vehicles(after: String, before: String, first: Int, last: Int): VehicleConnection
+}
+
+input StartReservationInput {
+  driverId: ID!
+  vehicleId: ID!
+}
+
+type StartReservationPayload {
+  reservation: Reservation
+}
+
+input StopReservationInput {
+  id: ID!
+}
+
+type StopReservationPayload {
+  reservation: Reservation
+}
+
+input SuspendDriverInput {
+  id: ID!
+}
+
+type SuspendDriverPayload {
+  driver: Driver
+}
+
+type Vehicle implements Node {
+  """The ID of an object"""
+  id: ID!
+  reservations(after: String, before: String, first: Int, last: Int): ReservationConnection
+  vin: String!
+}
+
+type VehicleConnection {
+  edges: [VehicleEdge]
+  pageInfo: PageInfo!
+}
+
+type VehicleEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Vehicle
+}
+

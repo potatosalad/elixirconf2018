@@ -44,6 +44,7 @@ defmodule Share.MixProject do
       {:jason, "~> 1.1"},
       {:ojson, "~> 1.0"},
       {:plug, "~> 1.6"},
+      {:poison, "~> 3.1"},
       {:poolboy, github: "devinus/poolboy", tag: "1.5.2", override: true},
       {:postgrex, "~> 0.13.5"},
       {:propcheck, "~> 1.1", only: :test},
