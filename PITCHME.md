@@ -23,7 +23,24 @@
 
 ---
 
-## Goals of Testing
+### Symptoms of Unsustainable Testing
+
+<ul>
+  <li class="fragment">Small code change = every test case fails</li>
+  <li class="fragment">Bugs are rarely discovered before production</li>
+  <li class="fragment">Non-critical systems are over-tested</li>
+  <li class="fragment">Everyone is unhappy :-(</li>
+</ul>
+
++++
+
+> Implementation details<br>change quite often,<br>and the test suites<br>are to be long lived.
+>
+> &mdash; <a href="http://erlang.org/doc/apps/common_test/why_test_chapter.html">Common Test: Why Test?</a>
+
+---
+
+## Why Test?
 
 <ul>
   <li class="fragment">Prove that a program is correct.</li>
@@ -41,7 +58,7 @@
 
 +++
 
-## Goals of Testing
+## Why Test?
 
 <ul>
   <li><del>Prove that a program is correct.</del></li>
@@ -53,6 +70,81 @@
 #### A successful test suite is one that reveals a bug.
 
 <blockquote class="fragment"><small>If a test suite results in OK,<br>then we know very little<br>that we did not know before.<br><br>&mdash; <a href="http://erlang.org/doc/apps/common_test/why_test_chapter.html">Common Test: Why Test?</a></small></blockquote>
+
+---
+
+### Techniques
+
+<ul>
+  <li class="fragment">TDD - Test Driven Development</li>
+  <li class="fragment">Acceptance Testing</li>
+  <li class="fragment">Code Coverage</li>
+  <li class="fragment">Model Checking / Property-based testing</li>
+</ul>
+
++++
+
+### Model Checking
+
+<ul>
+  <li class="fragment">[TLA+](http://lamport.azurewebsites.net/tla/tla.html)</li>
+  <li class="fragment">[Dezyne](https://www.verum.com/dezyne/)</li>
+  <li class="fragment">[Concuerror](https://concuerror.com/)</li>
+  <li class="fragment">[QuickCheck](http://www.quviq.com/), [PropEr](https://github.com/proper-testing/proper), and [StreamData](https://github.com/whatyouhide/stream_data)</li>
+</ul>
+
++++
+
+# PropCheck
+
+<small>(which uses PropEr)</small>
+
++++
+
+<img src="assets/fhproper.jpg" alt="Toyota" border="0" style="max-height: 70vh;">
+
+<small><a href="https://propertesting.com/">propertesting.com</a></small>
+
+---
+
+### Terminology
+
+---
+
+## Testing Levels
+
+<table>
+  <tr>
+    <th>Level</th>
+    <th>Box</th>
+    <th>Automatability</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td><code>Unit</code></td>
+    <td style="background-color: #fff;"><code>White</code></td>
+    <td style="background-color: #cfc;"><code>Highest</code></td>
+    <td style="background-color: #fcc;"><code>Lowest</code></td>
+  </tr>
+  <tr>
+    <td><code>Integration</code></td>
+    <td style="background-color: #ccc;"><code>Gray</code></td>
+    <td style="background-color: #cfc;"><code>High</code></td>
+    <td style="background-color: #ffc;"><code>Low</code></td>
+  </tr>
+  <tr>
+    <td><code>System</code></td>
+    <td style="background-color: #000; color: #fff;"><code>Black</code></td>
+    <td style="background-color: #ffc;"><code>Low</code></td>
+    <td style="background-color: #cfc;"><code>High</code></td>
+  </tr>
+  <tr>
+    <td><code>Operational</code></td>
+    <td style="background-color: #000; color: #fff;"><code>Black</code></td>
+    <td style="background-color: #fcc;"><code>Lowest</code></td>
+    <td style="background-color: #cfc;"><code>Highest</code></td>
+  </tr>
+</table>
 
 ---
 
@@ -109,61 +201,11 @@
 
 # Why Test?
 
-+++?image=assets/findbugs01.png&size=contain
-
 +++?image=assets/findbugs02.png&size=contain
 
 ---
 
 ## Testing Levels
-
-<ol>
-  <li>Unit</li>
-  <li>Integration</li>
-  <li>System</li>
-  <li>Operational</li>
-</ol>
-
-+++
-
-### Unit testing
-
-* White-box style.
-* Each test one unit of code (function).
-* Should never cross process boundaries in a program, let alone network connections.
-
-+++
-
-### Integration testing
-
-* Gray-box style.
-* Works to expose defects in the interactions between components (modules).
-* Checks the handling of data passed between various subsystem components.
-
-+++
-
-### System testing
-
-* Black-box style.
-* Tests a completely integrated system.
-
-+++
-
-### Operational acceptance testing
-
-* Non-functional software testing.
-* Side-effect or environmental parameters may be used to check that everything continues to run smoothly.
-
-+++
-
-## Testing Levels
-
-<!-- <ol>
-  <li>Unit</li>
-  <li>Integration</li>
-  <li>System</li>
-  <li>Operational</li>
-</ol> -->
 
 <table>
   <tr>
@@ -621,6 +663,34 @@ end
 
 +++
 
+```elixir
+defmodule PensieveModelTest do
+  use ExUnit.Case, async: false
+  use PropCheck
+  import PropCheck.StateM
+
+  alias PensieveModelStateM, as: M
+
+  property "pensieve model operations", [:verbose, {:numtests, 100}, {:constraint_tries, 50}] do
+    forall(cmds <- commands(M)) do
+      {:ok, apps} = Application.ensure_all_started(:pensieve)
+      {history, state, result} = run_commands(M, cmds)
+      for app <- apps, do: Application.stop(app)
+
+      (result == :ok)
+      |> aggregate(command_names(cmds))
+      |> when_fail(print_failure_report(cmds, state, result, history))
+    end
+  end
+end
+```
+
+<small class="fragment current-only" data-code-focus="9">we generate our list of commands</small>
+<small class="fragment current-only" data-code-focus="11">we run our list of commands</small>
+<small class="fragment current-only" data-code-focus="14">we verify the result</small>
+
++++
+
 ```plain
 ....................................................................................................
 OK: Passed 100 test(s).
@@ -652,3 +722,48 @@ OK: Passed 100 test(s).
 ```
 
 <small>`:proper_types.frequency/1`<br>or<br>`:proper_types.weighted_union/1`</small>
+
++++
+
+```plain
+==> share
+....................................................................................................
+OK: Passed 100 test(s).
+36% {'Elixir.ShareShim',add_driver_new,2}
+29% {'Elixir.ShareShim',add_vehicle_new,2}
+10% {'Elixir.ShareShim',set_time,1}
+4% {'Elixir.ShareShim',start_reservation_valid,3}
+4% {'Elixir.ShareShim',suspend_driver,2}
+3% {'Elixir.ShareShim',approve_driver,2}
+2% {'Elixir.ShareShim',start_reservation_unapproved_driver,3}
+2% {'Elixir.ShareShim',stop_reservation_started,2}
+1% {'Elixir.ShareShim',start_reservation_invalid_driver,3}
+1% {'Elixir.ShareShim',start_reservation_invalid,3}
+1% {'Elixir.ShareShim',stop_reservation_stopped,2}
+1% {'Elixir.ShareShim',start_reservation_invalid_vehicle,3}
+```
+
+<a href="https://github.com/potatosalad/elixirconf2018" style="color: black;"><img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/github-mark.svg" width="40" height="40" border="0" style="border: none; box-shadow: none; margin: 0; padding: 0;"> potatosalad/elixirconf2018</a>
+
+---
+
+## Operational Testing
+
+![Image](assets/down-arrow.png)
+
++++
+
+![Image](assets/hui-operational-testing.jpg)
+
+<small><small style="opacity: 0.25;">Credit to [KITV 4: Island News](http://www.kitv.com/story/38614769/need-a-ride-add-the-app-and-lose-the-key-with-drive-hui-car-share)</small></small>
+
++++?image=assets/hui-launch.jpg&size=contain
+
+---
+
+<blockquote>Aim for finding bugs.<small><br>Write whatever test that has<br>the highest probability of finding a bug,<br>now or in the future.<br>Concentrate more on the critical parts.<br><br>&mdash; <a href="http://erlang.org/doc/apps/common_test/why_test_chapter.html">Common Test: Why Test?</a></small></blockquote>
+
+---
+
+### <a href="https://github.com/potatosalad/elixirconf2018" style="color: black;"><img src="https://cdn.rawgit.com/potatosalad/elixirconf2018/master/assets/github-mark.svg" width="60" height="60" border="0" style="border: none; box-shadow: none; margin: 0; padding: 0;"> potatosalad/elixirconf2018</a>
+
