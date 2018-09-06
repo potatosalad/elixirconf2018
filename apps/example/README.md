@@ -2,6 +2,12 @@
 
 Example of unit testing with [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.html) and [PropCheck](https://github.com/alfert/propcheck).
 
+An interactive shell may be started with:
+
+```bash
+iex -S mix
+```
+
 ## Usage
 
 ```elixir

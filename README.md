@@ -7,7 +7,13 @@ This repository contains the sources used for the [&ldquo;Sustainable Testing&rd
 
 Feel free to [file an issue](https://github.com/potatosalad/elixirconf2018/issues) to this repository if you have any questions related to the talk.
 
-The presentation slides are available at [gitpitch.com/potatosalad/elixirconf2018](https://gitpitch.com/potatosalad/elixirconf2018).
+The presentation slides are available at [gitpitch.com/potatosalad/elixirconf2018](https://gitpitch.com/potatosalad/elixirconf2018) and as [a PDF](https://cdn.rawgit.com/potatosalad/elixirconf2018/master/presentation.pdf).
+
+### Applications
+
+ * [example](https://github.com/potatosalad/elixirconf2018/tree/master/apps/example) &mdash; Example of unit testing with [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.html) and [PropCheck](https://github.com/alfert/propcheck).
+ * [pensieve](https://github.com/potatosalad/elixirconf2018/tree/master/apps/pensieve) &mdash; Example of FSM and StateM testing with [PropCheck](https://github.com/alfert/propcheck).
+ * [share](https://github.com/potatosalad/elixirconf2018/tree/master/apps/share) &mdash; Example &ldquo;Vehicle Sharing&rdquo; system using [Ecto](https://github.com/elixir-ecto/ecto), [Absinthe](https://github.com/absinthe-graphql/absinthe), and StateM testing with [PropCheck](https://github.com/alfert/propcheck).
 
 ### Resources
 
